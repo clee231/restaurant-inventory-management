@@ -2,17 +2,17 @@
 CS 342: Software Design - Group #7 Project #4 - Restaurant inventory management
 
 
-Adrian Pasciak <apasci2@uic.edu>,
-Chase Lee <clee231@uic.edu>,
-Christopher Schultz <cschul25@uic.edu> (appointed leader),
-Nerijus Gelezinis <ngelez2@uic.edu>,
-Patrick Tam <ptam5@uic.edu>
+* Adrian Pasciak,
+* Chase Lee,
+* Christopher Schultz (appointed leader),
+* Nerijus Gelezinis,
+* Patrick Tam
 
 
 Prompt:
 
 
-"Your software firm, ACME Hacking, Inc. has been approached by the owner of 
+>> "Your software firm, ACME Hacking, Inc. has been approached by the owner of 
 Wolfgang Buck, a famous restaurant in the area. The restaurant has been quite 
 successful, so successful that the current system of maintaining inventory of 
 ingredients for dishes to be served at the restaurant has become inadequate. 
