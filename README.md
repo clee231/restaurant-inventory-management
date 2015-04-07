@@ -12,7 +12,7 @@ CS 342: Software Design - Group #7 Project #4 - Restaurant inventory management
 Prompt:
 
 
->> "Your software firm, ACME Hacking, Inc. has been approached by the owner of 
+> "Your software firm, ACME Hacking, Inc. has been approached by the owner of 
 Wolfgang Buck, a famous restaurant in the area. The restaurant has been quite 
 successful, so successful that the current system of maintaining inventory of 
 ingredients for dishes to be served at the restaurant has become inadequate. 
