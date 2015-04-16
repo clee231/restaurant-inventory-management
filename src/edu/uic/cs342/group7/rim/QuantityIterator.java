@@ -11,7 +11,7 @@ import java.util.*;
  * Patrick Tam  
  *
  */
-public class QuantityIterator implements Iterator{
+public class QuantityIterator implements NonJavaIterator{
   private ArrayList<Quantity> list;
   private int position = 0;
 
