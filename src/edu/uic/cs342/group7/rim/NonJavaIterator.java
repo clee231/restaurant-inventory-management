@@ -9,7 +9,7 @@ package edu.uic.cs342.group7.rim;
  * Patrick Tam
  *
  */
-public interface Iterator {
+public interface NonJavaIterator {
   boolean hasNext();
   Object next();
   void remove();
