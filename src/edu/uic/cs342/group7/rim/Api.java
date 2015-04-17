@@ -10,24 +10,42 @@ public class Api {
 	private InventoryManager inventory = new InventoryManager(new ArrayList<Ingredient>());// Newing with empty list to avoid null pointer exception
 	private Date currentDate = new Date();
 	private Calendar calendar =  Calendar.getInstance();
+	private DishSize size;
+	
 	
 	public Api(){
 		orderingSystem.addObserver(observer);
 	}
 	
-	public boolean orderDish(String dishName){
-		return orderingSystem.orderDish(dishName);
+	
+	public boolean orderDish(String dishName, String dishSize){
+		if(dishSize.equals("Full order")){
+			size = new FullOrder();
+			orderingSystem.setDishSize(size);
+		}
+		else if(dishSize.equals("Super size order")){
+			size = new SuperSizeOrder();
+			orderingSystem.setDishSize(size);
+		}
+		else if(dishSize.equals("Half order")){
+			size = new HalfOrder();
+			orderingSystem.setDishSize(size);
+		}
+		return orderingSystem.orderDish(dishName, size);
 	}
+	
 	
 	public void addItemsToInventory(ArrayList<Ingredient> items) {
 		inventory.addItems(items);
 	}
+	
 	
 	public ArrayList<Ingredient> getShoppingList(){
 		ArrayList<Dish> dishHistory = observer.getDishesOrdered();
 		return inventory.forecast(dishHistory);
 	}
 
+	
 	public void updateDate(){
 		calendar.setTime(currentDate);
 		calendar.add(Calendar.DATE, 1);
