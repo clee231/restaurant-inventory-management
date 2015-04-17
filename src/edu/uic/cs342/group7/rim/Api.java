@@ -54,7 +54,7 @@ public class Api {
 			return false;
 		}
 		//Will return true if dish can be created or false if it cannot
-		return orderingSystem.orderDish(dishName, size);
+		return orderingSystem.orderDish(dishName);
 	}
 	
 	
