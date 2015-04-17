@@ -12,4 +12,8 @@ public class DishIngredient {
 		return quantity;
 	}
 	
+	public void setQuantity(int quant){
+		quantity = quant;
+	}
+	
 }

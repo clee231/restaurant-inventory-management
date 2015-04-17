@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class OrderingSystem {
 	private ArrayList<Observer> listOfObserver;
+	private ArrayList<Dish> dishes;
 	private DishSize dishSize;
 	
 	public boolean orderDish(String dishName){
@@ -38,6 +39,7 @@ public class OrderingSystem {
 		
 		//here it means for sure all the ingredients are available... can now get them
 		for(DishIngredient ing : ingredients){
+			//ing.getIngredient() -> returns Ingredient.getIngredient(ing.getQuantity()) -> passes to Ingredient class to subtract number
 			ing.getIngredient().getIngredient(ing.getQuantity());
 		}
 		  
@@ -51,10 +53,10 @@ public class OrderingSystem {
 	}
 	
 	public ArrayList<Dish> availableDishes(){
-		ArrayList<Dish> dishes = new ArrayList<Dish>();
-		
-		//????
-		
 		return dishes;
+	}
+	
+	public void setDishes(ArrayList<Dish> dishList){
+		dishes = dishList;
 	}
 }
