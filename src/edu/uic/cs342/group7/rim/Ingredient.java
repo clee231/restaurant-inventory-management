@@ -10,7 +10,7 @@ import java.util.*;
  * Nerijus Gelezinis (no-show),
  * Patrick Tam
  */
-public class Ingredient {
+public class Ingredient{
   private String name;
   private ArrayList<Quantity> list = new ArrayList<Quantity>();
   
@@ -23,6 +23,9 @@ public class Ingredient {
     return this.name;
   }
   
+  public String toString() {
+    return getName();
+  }
   
   public boolean isIngredientAvail(int count) {
     boolean isAvailable = false;
@@ -111,5 +114,14 @@ public class Ingredient {
   
   public Iterator<Quantity> createIterator() {
     return this.list.iterator();
+  }
+  
+  public Quantity getFirstQuantity() {
+    if(list.size() > 0) {
+      return list.get(0);
+    }
+    else {
+      return null;
+    }
   }
 }

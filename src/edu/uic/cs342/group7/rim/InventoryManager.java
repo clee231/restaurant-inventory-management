@@ -12,8 +12,15 @@ import java.util.*;
  *
  */
 public class InventoryManager {
-  private HashMap<String, Ingredient> database;
+  private HashMap<String, Ingredient> database;//points to all ingredients being managed by system
   
+  
+  /**
+   * Class Constructor. Takes in a list of ingredients that the system will managed such as
+   * tomato, onion etc.
+   * 
+   * @param list contains base ingredients of system
+   */
   public InventoryManager(ArrayList<Ingredient> list) {
     int size = list.size();
     Ingredient ingredient;
@@ -28,6 +35,14 @@ public class InventoryManager {
     }
   }
   
+  
+  /**
+   * Retrieves and removes ingredients in the system needed to make a dish. Does not
+   * remove any ingredients if there are not enough ingredients to make a dish.
+   * 
+   * @param dish user desired dish
+   * @return true if dish could be made. Returns false if could not make dish
+   */
   public boolean getIngredientsForDish(Dish dish) {
     boolean madeDish = false;
     DishIngredient dishIngredient;
@@ -63,6 +78,14 @@ public class InventoryManager {
     return madeDish;
   }
   
+  
+  /**
+   * Removes all spoiled ingredient quantities from system that have expired
+   * based off the quantity expiration date
+   *  
+   * @param date todays date
+   * @return the number of quantities removed by the system
+   */
   public int removedSpoiledIngredients(Date date) {
     Iterator<Map.Entry<String, Ingredient>> entries = database.entrySet().iterator();
     Map.Entry<String, Ingredient> entry;
@@ -79,6 +102,13 @@ public class InventoryManager {
   }
   
   
+  /**
+   * Add ingredient quantities in Ingredient instances
+   * in List Parameter to system to manage
+   * 
+   * @param items Ingredient instances list containing Quantity instances
+   * @return number of quantities added to system to manage
+   */
   public int addItems(ArrayList<Ingredient> items) {
     Iterator<Ingredient> ingredientItr = items.iterator();
     Ingredient ingredient;
@@ -97,6 +127,79 @@ public class InventoryManager {
     }
     
     return quantityAdded;
+  }
+  
+  
+  /**
+   * Forecasts systems ingredients Quantity needs based off orderHistory. If system does not have enough
+   * of a certain Ingredient to make all the dishes in orderHistory, this method will add the amount needed
+   * to the return list.
+   *  
+   * @param orderHistory list of dishes to forecast from
+   * @return ArrayList of Ingredients. Ingredient Quantities represent want needs to be added
+   */
+  public ArrayList<Ingredient> forecast(ArrayList<Dish> orderHistory) {
+    ArrayList<Ingredient> consolidatedIngHist = createConsolidatedIngredientList(orderHistory);
+    Iterator<Ingredient> itr = consolidatedIngHist.iterator();
+    Ingredient ingredient;
+    Ingredient databaseIng;
+    
+    //Remove Ingredients from ConsolidatedIngHist if database has enough
+    while(itr.hasNext()) {
+      ingredient = itr.next();
+      databaseIng = database.get(ingredient.getName());
+      if(databaseIng.isIngredientAvail(ingredient.getFirstQuantity().getCount())) {
+        itr.remove();
+      }
+    }
+    return consolidatedIngHist;
+  }
+  
+  
+  /**
+   * Creates a count of Ingredients needed for all of the dishes
+   * in orderHisttory parameter. Returns this consolidated count
+   *  
+   * @param orderHistory dishes to count ingredients from
+   * @return consolidated count of ingredients in an ArrayList
+   */
+  private ArrayList<Ingredient> createConsolidatedIngredientList(ArrayList<Dish> orderHistory) {
+    ArrayList<Ingredient> consolidatedHistory = new ArrayList<Ingredient>();
+    Iterator<Dish> orderHistoryItr = orderHistory.iterator();
+    Iterator<Map.Entry<String, Ingredient>> entries = database.entrySet().iterator();
+    HashMap<String, Ingredient>  ingredientCount = new HashMap<String, Ingredient>(database.size()); //used for fast lookup in consolidatedHistory
+    Ingredient ingredient;
+    Quantity q;
+    Map.Entry<String, Ingredient> entry;
+    Dish dish;
+    Iterator<DishIngredient> dishIngItr;
+    DishIngredient dishIng;
+    
+    //Init consolidateHistory and ingredientCount
+    while(entries.hasNext()) {
+      entry = entries.next();
+      ingredient = new Ingredient(entry.getKey());
+      q = new Quantity();
+      q.setCount(0);
+      ingredient.addQuantity(q);
+      consolidatedHistory.add(ingredient);
+      ingredientCount.put(entry.getKey(), ingredient);
+    }
+    
+
+    //Get Ingredient Counts
+    while(orderHistoryItr.hasNext()) {
+      dish = orderHistoryItr.next();
+      dishIngItr = dish.getIngredients().iterator();
+      while(dishIngItr.hasNext()) {
+        dishIng = dishIngItr.next();
+        ingredient = ingredientCount.get(dishIng.getIngredient().getName());
+        q = ingredient.getFirstQuantity();
+        q.setCount(q.getCount() + 1);
+      }
+    }
+    
+    return consolidatedHistory;
   }
   
 }
