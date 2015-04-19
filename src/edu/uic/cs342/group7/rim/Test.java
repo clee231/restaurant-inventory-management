@@ -8,6 +8,7 @@ public class Test {
     Api api =  new Api();
 
     fillWithDishes(api);
+    addIngredients(api);
   }
   
   public static void fillWithDishes(Api api) {
@@ -87,6 +88,82 @@ public class Test {
     while(itr.hasNext()) {
       DishIngredient temp = itr.next();
       System.out.print(temp.getIngredient() + ", " + temp.getQuantity() + "; ");
+    }
+    System.out.println("");
+  }
+  
+  public static void addIngredients(Api api) {
+    Ingredient ing1 = new Ingredient("Tomato");
+    Ingredient ing2 = new Ingredient("Flour");
+    Ingredient ing3 = new Ingredient("Sugar");
+    
+    Quantity q1_1 = new Quantity();
+    Quantity q1_2 = new Quantity();
+    Quantity q2_1 = new Quantity();
+    Quantity q3_1 = new Quantity();
+    Quantity q3_2 = new Quantity();
+    Quantity q3_3 = new Quantity();
+    
+    q1_1.setCount(4);
+    q1_2.setCount(6);
+    q2_1.setCount(10);
+    q3_1.setCount(4);
+    q3_2.setCount(2);
+    q3_3.setCount(1);
+    
+    Calendar date1_1 = new GregorianCalendar();
+    Calendar date1_2 = new GregorianCalendar();
+    Calendar date2_1 = new GregorianCalendar();
+    Calendar date3_1 = new GregorianCalendar();
+    Calendar date3_2 = new GregorianCalendar();
+    Calendar date3_3 = new GregorianCalendar();
+    
+    date1_1.set(15, 4, 19);
+    date1_2.set(15, 4, 20);
+    date2_1.set(15, 5, 15);
+    date3_1.set(15, 4, 17);
+    date3_2.set(15, 4, 19);
+    date3_3.set(15, 4, 20);
+    
+    q1_1.setDate(date1_1.getTime());
+    q1_2.setDate(date1_2.getTime());
+    q2_1.setDate(date2_1.getTime());
+    q3_1.setDate(date3_1.getTime());
+    q3_2.setDate(date3_2.getTime());
+    q3_3.setDate(date3_3.getTime());
+    
+    ing1.addQuantity(q1_1);
+    ing1.addQuantity(q1_2);
+    ing2.addQuantity(q2_1);
+    ing3.addQuantity(q3_1);
+    ing3.addQuantity(q3_2);
+    ing3.addQuantity(q3_3);
+    
+    //Final Ing 1 Test
+    Iterator<Quantity> itr;
+    System.out.print("Ing 1 Info: " + ing1.getName() + " Quantity: ");
+    itr = ing1.createIterator();
+    while(itr.hasNext()) {
+      Quantity temp = itr.next();
+      System.out.print(temp.getCount() + ", " + temp.getDate() + "; ");
+    }
+    System.out.println("");
+    
+    //Final Ing 2 Test
+    System.out.print("Ing 2 Info: " + ing2.getName() + " Quantity: ");
+    itr = ing2.createIterator();
+    while(itr.hasNext()) {
+      Quantity temp = itr.next();
+      System.out.print(temp.getCount() + ", " + temp.getDate() + "; ");
+    }
+    System.out.println("");
+    
+    //Final Ing 3 Test
+    System.out.print("Ing 3 Info: " + ing3.getName() + " Quantity: ");
+    itr = ing3.createIterator();
+    while(itr.hasNext()) {
+      Quantity temp = itr.next();
+      System.out.print(temp.getCount() + ", " + temp.getDate() + "; ");
     }
     System.out.println("");
   }
