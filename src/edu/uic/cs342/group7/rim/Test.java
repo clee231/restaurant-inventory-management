@@ -124,7 +124,7 @@ public class Test {
     
     q1_1.setCount(4);
     q1_2.setCount(6);
-    q2_1.setCount(10);
+    q2_1.setCount(5);
     q3_1.setCount(4);
     q3_2.setCount(2);
     q3_3.setCount(1);
@@ -205,12 +205,20 @@ public class Test {
     
     
     System.out.println("******** Ordering Dishes **********");
-    System.out.println("Ordering: " + dish1 + " Size: " + size2);
-    System.out.println("Outcome: " + api.orderDish(dish1, size2));
-    System.out.println("Ordering: " + dish1 + " Size: " + size2);
-    System.out.println("Outcome: " + api.orderDish(dish1, size2));
-    System.out.println("Ordering: " + dish1 + " Size: " + size2);
-    System.out.println("Outcome: " + api.orderDish(dish1, size2));
+    System.out.println("Ordering: " + dish2 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+    System.out.println("Ordering: " + dish2 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+    System.out.println("Ordering: " + dish2 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size3);
+    System.out.println("Outcome: " + api.orderDish(dish1, size3));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
   }
   
 }
