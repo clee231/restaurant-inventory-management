@@ -25,8 +25,54 @@ public class Ingredient {
   }
   
   
-  public QuantityIterator createIterator() {
-    return new QuantityIterator(list);
+  public boolean isIngredientAvail(int count) {
+    boolean isAvailable = false;
+    
+    if(this.getTotalQuantityOfIngredient() >= count) {
+      isAvailable = true;
+    }
+    
+    return isAvailable;
+  }
+  
+  
+  public int getIngredient(int count) {
+    int totalRetrieved = 0;
+    Quantity q;
+    int quantityCount = 0;
+   
+    while(totalRetrieved < count && this.list.size() > 0) {
+      q = this.list.get(0); //oldest quantity
+      quantityCount = q.getCount();
+      
+      if(quantityCount >= count) {
+        q.setCount(quantityCount - count);
+        totalRetrieved += (quantityCount - count);
+      }
+      else {
+        q.setCount(0);
+        totalRetrieved += quantityCount;
+      }
+      
+      //remove quantity if it not longer has any count
+      if(q.getCount() <= 0) {
+        this.list.remove(0);
+      }
+    }
+      
+    return totalRetrieved;
+  }
+  
+  
+  public int getTotalQuantityOfIngredient() {
+    Iterator<Quantity> iterator = this.list.iterator();
+    int count = 0;
+    
+    while(iterator.hasNext()) {
+      count += iterator.next().getCount();
+    }
+    
+    return count;
   }
   
   
@@ -48,5 +94,19 @@ public class Ingredient {
   }
   
   
-  
+  public int removedSpoiledQuantity(Date date) {
+    int numberOfRemoved = 0;
+    
+    while(true) {
+      if(this.list.get(0).getDate().compareTo(date) > 0) {
+        this.list.remove(0);
+        ++numberOfRemoved;
+      }
+      else {
+        break;
+      }
+    }
+    
+    return numberOfRemoved;
+  }
 }
