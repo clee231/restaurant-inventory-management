@@ -16,7 +16,7 @@ public class OrderingSystem {
 		ArrayList<Dish> dishes = availableDishes();
 		for(Dish d : dishes){
 			//check if the name exists on our Dish list
-			if(d.getName() == dishName){
+			if((d.getName()).compareTo(dishName) == 1){
 				dishExists = true;
 				dish = d;
 				break;
