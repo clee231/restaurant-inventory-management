@@ -27,6 +27,7 @@ public class Api {
 	private Date currentDate = new Date();
 	private Calendar calendar =  Calendar.getInstance();
 	private DishSize size;
+	private Dish dish = new Dish();
 	
 	// When new instance of Api is created an observer will be added to keep track of dishes ordered
 	public Api(){
@@ -54,7 +55,12 @@ public class Api {
 			return false;
 		}
 		//Will return true if dish can be created or false if it cannot
-		return orderingSystem.orderDish(dishName);
+		dish = orderingSystem.orderDish(dishName);
+		if(dish == null){
+			System.out.println("Dish does not exist");
+			return false; 
+		}
+		return inventory.getIngredientsForDish(dish);
 	}
 	
 	
