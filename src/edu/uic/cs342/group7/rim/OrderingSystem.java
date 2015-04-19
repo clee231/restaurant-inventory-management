@@ -29,12 +29,12 @@ public class OrderingSystem {
 		  
 		//third: check if ingredients are available for quantity and if it exists
 		for(DishIngredient ing : ingredients){
-			if(ing.getIngredient().isIngredientAvailable() == false){
+			if(ing.getIngredient().isIngredientAvail(ing.getQuantity()) == false){
 				return false;
 			}
-			if(ing.getQuantity() > ing.getIngredient().getQuantity().getCount()){
+			/*if(ing.getQuantity() > ing.getIngredient().getTotalQuantityOfIngredient()){
 				return false;
-			}
+			}*/
 		}
 		
 		//here it means for sure all the ingredients are available... can now get them
