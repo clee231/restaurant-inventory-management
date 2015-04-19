@@ -4,6 +4,16 @@
  */
 package edu.uic.cs342.group7.rim;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+//Java 8 routines
+//import java.io.IOException;
+//import java.nio.charset.StandardCharsets;
+//import java.nio.file.Files;
+//import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -16,7 +26,9 @@ import java.util.Scanner;
  *
  */
 public class Client {
-
+	ArrayList<Ingredient> ingred = null;
+	ArrayList<Dish> dish = null;
+	Api connection = new Api();
 	/**
 	 * Constructor Stub
 	 */
@@ -33,7 +45,7 @@ public class Client {
 		printHeader("Menu");
 		System.out.println("1. Order Dish");
 		System.out.println("2. Add Items to Inventory");
-		System.out.println("3. Add Dish");
+		System.out.println("3. Add Dish (Deprecated)");
 		System.out.println("4. End Day");
 		System.out.println("5. Forecast Shopping List");
 		System.out.println("6. Load Data from file");
@@ -77,21 +89,60 @@ public class Client {
 			switch(Integer.parseInt(input)) {
 			case 1:
 				printHeader("Order Dish");
+				//TODO: When the API is done, get a list of all dishes available
+				System.out.println("Please select the dish you would like to order:");
 				break;
 			case 2:
 				printHeader("Add Items to Inventory");
 				break;
 			case 3:
 				printHeader("Add Dish");
+				System.out.println("Deprecated function");
 				break;
 			case 4:
 				printHeader("End Day");
 				break;
 			case 5:
-				printHeader("Forecase Shopping List");
+				printHeader("Forecast Shopping List");
 				break;
 			case 6:
 				printHeader("Load Data from file");
+				System.out.println("Please specify a file name to load: ");
+				input = s.nextLine();
+				// This is Java 8... 5 lines to read the file...
+//				try {
+//					Files.lines(Paths.get(input), StandardCharsets.UTF_8).forEach(System.out::println);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+				BufferedReader br = null;
+				String line = null;
+				try {
+					 
+					br = new BufferedReader(new FileReader(input));
+					while ((line = br.readLine()) != null) {
+						String[] elements = line.split(",");
+						for(String item : elements) {
+							System.out.print(item + "*");
+						}
+						System.out.print("\n");
+					}
+			 
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (br != null) {
+						try {
+							br.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+
 				break;
 			default:
 				System.out.println("***Incorrect input, try again.***");

@@ -5,7 +5,7 @@ CS 342: Software Design - Group #7 Project #4 - Restaurant inventory management
 * Adrian Pasciak,
 * Chase Lee,
 * Christopher Schultz (appointed leader),
-* Nerijus Gelezinis,
+* Nerijus Gelezinis (no show),
 * Patrick Tam
 
 
