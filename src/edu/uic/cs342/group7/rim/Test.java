@@ -65,7 +65,7 @@ public class Test {
     d2.setDishIngredients(ding2);
     d3.setDishIngredients(ding3);
     
-    System.out.println("******* Adding Dishes ********");
+    System.out.println("******* Creating Dishes ********");
     //Final Dish 1 Test
     System.out.print("Dish 1 Info: " + d1.getName() + " Ingredients: ");
     itr = d1.getIngredients().iterator();
@@ -92,6 +92,13 @@ public class Test {
       System.out.print(temp.getIngredient() + ", " + temp.getQuantity() + "; ");
     }
     System.out.println("\n");
+    
+    System.out.println("****** Adding Dishes to API ********\n");
+    ArrayList<Dish> dishes = new ArrayList<Dish>();
+    dishes.add(d1);
+    dishes.add(d2);
+    dishes.add(d3);
+    api.loadDishes(dishes);
   }
   
   public static void addIngredients(Api api) {
@@ -141,7 +148,7 @@ public class Test {
     ing3.addQuantity(q3_2);
     ing3.addQuantity(q3_3);
     
-    System.out.println("******* Add Ingredients *********");
+    System.out.println("******* Create Ingredients *********");
     //Final Ing 1 Test
     Iterator<Quantity> itr;
     System.out.print("Ing 1 Info: " + ing1.getName() + " Quantity: ");
@@ -169,6 +176,13 @@ public class Test {
       System.out.print(temp.getCount() + ", " + temp.getDate() + "; ");
     }
     System.out.println("\n");
+    
+    ArrayList<Ingredient> ingrds = new ArrayList<Ingredient>();
+    ingrds.add(ing1);
+    ingrds.add(ing2);
+    ingrds.add(ing3);
+    System.out.println("******** Add Ingredients to System *********\n");
+    api.addItemsToInventory(ingrds);
   }
   
   public static void orderDishes(Api api) {
