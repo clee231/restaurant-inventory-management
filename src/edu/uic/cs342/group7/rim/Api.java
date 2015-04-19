@@ -103,6 +103,7 @@ public class Api {
 	public void updateDate(){
 		calendar.setTime(currentDate);
 		calendar.add(Calendar.DATE, 1);
-		currentDate = calendar.getTime();		
+		currentDate = calendar.getTime();
+		observer.resetList();
 	}
 }
