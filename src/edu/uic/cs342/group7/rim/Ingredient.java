@@ -8,7 +8,7 @@ import java.util.*;
  * Chase Lee,
  * Christopher Schultz,
  * Nerijus Gelezinis (no-show),
- * Patrick Tam
+ * Patrick Tam 
  */
 public class Ingredient{
   private String name;
