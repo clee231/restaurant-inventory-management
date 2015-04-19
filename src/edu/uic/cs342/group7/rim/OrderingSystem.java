@@ -15,8 +15,9 @@ public class OrderingSystem {
 		//first: get all available dishes
 		ArrayList<Dish> dishes = availableDishes();
 		for(Dish d : dishes){
+			System.out.println(dishName + d.getName());
 			//check if the name exists on our Dish list
-			if((d.getName()).compareTo(dishName) == 1){
+			if((d.getName()).compareTo(dishName) == 0){
 				dishExists = true;
 				dish = d;
 				break;
@@ -24,6 +25,7 @@ public class OrderingSystem {
 		}
 		//check if it broke out of the loop from prior, if it did, Dish was found and can continue
 		if(dishExists == false){
+			System.out.println("Here!");
 			return false;
 		}
 
@@ -33,6 +35,7 @@ public class OrderingSystem {
 		//third: check if ingredients are available for quantity and if it exists
 		for(DishIngredient ing : ingredients){
 			if(ing.getIngredient().isIngredientAvail(ing.getQuantity()) == false){
+				System.out.println("Here2!");
 				return false;
 			}
 			/*if(ing.getQuantity() > ing.getIngredient().getTotalQuantityOfIngredient()){
