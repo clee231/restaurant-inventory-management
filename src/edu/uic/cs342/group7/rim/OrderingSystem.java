@@ -20,7 +20,7 @@ public class OrderingSystem {
 			}
 		}
 
-		if(dishExists = false){
+		if(dishExists == false){
 			return false;
 		}
 
