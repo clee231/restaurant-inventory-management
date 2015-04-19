@@ -16,4 +16,8 @@ public class DishIngredient {
 		quantity = quant;
 	}
 	
+	public void setIngredient(Ingredient ing){
+		ingredient = ing;
+	}
+	
 }
