@@ -11,6 +11,7 @@ public class Test {
     addIngredients(api);
     orderDishes(api);
     forecastApi(api);
+    orderDishes2(api);
   }
   
   public static void fillWithDishes(Api api) {
@@ -235,10 +236,49 @@ public class Test {
     */
     System.out.println("\n");
   }
-  
+  public static void orderDishes2(Api api) {
+	    String dish1 = "Tomato Soup";
+	    String dish2 = "Tomato Pie";
+	    String dish3 = "Tomato Cookie";
+	    
+	    String size1 = "Full order";
+	    String size2 = "Super size order";
+	    String size3 = "Half order";
+	    
+	    
+	    System.out.println("******** Ordering Dishes **********");
+	    System.out.println("Ordering: " + dish1 + " Size: " + size2);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size2));
+	    System.out.println("Ordering: " + dish1 + " Size: " + size2);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size2));
+	    /*System.out.println("Ordering: " + dish2 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+	    System.out.println("Ordering: " + dish2 + " Size: " + size2);
+	    System.out.println("Outcome: " + api.orderDish(dish2, size2));
+	    System.out.println("Ordering: " + dish3 + " Size: " + size2);
+	    System.out.println("Outcome: " + api.orderDish(dish3, size2));
+	    System.out.println("Ordering: " + dish3 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish3, size1));
+	    System.out.println("Ordering: " + dish3 + " Size: " + size3);
+	    System.out.println("Outcome: " + api.orderDish(dish3, size3));
+
+	    System.out.println("Ordering: " + dish2 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+	    System.out.println("Ordering: " + dish1 + " Size: " + size3);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size3));
+	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+	    */
+	    System.out.println("\n");
+	  } 
   
   public static void forecastApi(Api api) {
     ArrayList<Ingredient> list = api.getShoppingList();
+    api.addItemsToInventory(list);
     Iterator<Ingredient> itr = list.iterator();
     Ingredient ingredient;
     
