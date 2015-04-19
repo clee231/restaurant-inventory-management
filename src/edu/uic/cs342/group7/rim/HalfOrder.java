@@ -1,6 +1,7 @@
 package edu.uic.cs342.group7.rim;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author
@@ -17,10 +18,17 @@ public class HalfOrder implements DishSize {
 
 	// This function will modify the quantity of ingredients needed for a dish by half
 	public ArrayList<DishIngredient> getIngredients(ArrayList<DishIngredient> listOfIngredients){		
-		for(int i = 0; i < listOfIngredients.size(); i++){
-		  DishIngredient ingredient = listOfIngredients.get(i);
-		  ingredient.setQuantity(ingredient.getQuantity()/2);	  
+		ArrayList<DishIngredient> newIngredients = new ArrayList<DishIngredient>();
+		Iterator<DishIngredient> itr = listOfIngredients.iterator();
+		while(itr.hasNext()) {
+		  DishIngredient ingredient = new DishIngredient();
+		  DishIngredient temp = itr.next();
+		  
+		  ingredient.setIngredient(temp.getIngredient());
+		  ingredient.setQuantity(temp.getQuantity()/2);
+		  newIngredients.add(ingredient);
 		}
-		return listOfIngredients;
+
+		return newIngredients;
 	}
 }
