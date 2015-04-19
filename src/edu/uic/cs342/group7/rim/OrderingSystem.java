@@ -15,7 +15,7 @@ public class OrderingSystem {
 		//first: get all available dishes
 		ArrayList<Dish> dishes = availableDishes();
 		for(Dish d : dishes){
-			System.out.println(dishName + d.getName());
+			//System.out.println(dishName + d.getName());
 			//check if the name exists on our Dish list
 			if((d.getName()).compareTo(dishName) == 0){
 				dishExists = true;
@@ -51,6 +51,35 @@ public class OrderingSystem {
 			ing.getIngredient().getIngredient(ing.getQuantity());
 		}*/
 		return dish;
+	}
+	
+	public Dish captureDish(String dishName){
+		//boolean dishExists = false;
+		//Dish dish = new Dish();
+		
+		//first: get all available dishes
+		ArrayList<Dish> dishes = availableDishes();
+		for(Dish d : dishes){
+			//System.out.println(dishName + d.getName());
+			//check if the name exists on our Dish list
+			if((d.getName()).compareTo(dishName) == 0){
+				//dishExists = true;
+				//dish = d;
+				//break;
+				return d;
+			}
+		}
+		return null;
+	}
+	
+	public void replaceDish(Dish dish){
+		for(Dish d : dishes){
+			if((d.getName()).compareTo(dish.getName()) == 0){
+				d = dish;
+				//return true;
+			}
+		}
+		//return false;
 	}
 	
 	//adds an observer

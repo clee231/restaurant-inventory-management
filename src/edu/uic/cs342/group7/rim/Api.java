@@ -55,12 +55,20 @@ public class Api {
 			return false;
 		}
 		//Will return true if dish can be created or false if it cannot
-		dish = orderingSystem.orderDish(dishName);
-		if(dish == null){
+		Dish saveDish = orderingSystem.captureDish(dishName);
+		if(saveDish == null){
 			System.out.println("Dish does not exist");
 			return false; 
 		}
-		return inventory.getIngredientsForDish(dish);
+		
+		dish = orderingSystem.orderDish(dishName);
+		/*if(dish == null){
+			System.out.println("Dish does not exist");
+			return false; 
+		}*/
+		boolean result = inventory.getIngredientsForDish(dish);
+		orderingSystem.replaceDish(saveDish);
+		return result;
 	}
 	
 	
