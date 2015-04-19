@@ -77,7 +77,7 @@ public class Ingredient{
       
       if(quantityCount >= count) {
         q.setCount(quantityCount - count);
-        totalRetrieved += (quantityCount - count);
+        totalRetrieved += (count);
       }
       else {
         q.setCount(0);
