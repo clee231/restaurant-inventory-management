@@ -19,7 +19,8 @@ public class OrderingSystem {
 			//check if the name exists on our Dish list
 			if((d.getName()).compareTo(dishName) == 0){
 				dishExists = true;
-				dish = d;
+				dish.setDishIngredients(d.getIngredients());// = d;
+				dish.setName(d.getName());
 				break;
 			}
 		}
