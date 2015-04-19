@@ -16,10 +16,13 @@ import java.util.ArrayList;
 public class SuperSizeOrder implements DishSize {
 
 	// This method will double the quanitites needed for an ingredient
-	public ArrayList<DishIngredient> getIngredients(ArrayList<DishIngredient> listOfIngredients){		
+	public ArrayList<DishIngredient> getIngredients(ArrayList<DishIngredient> listOfIngredients){	
+		ArrayList<DishIngredient> newIngredients = new ArrayList<DishIngredient>();
 		for(int i = 0; i < listOfIngredients.size(); i++){
-		  DishIngredient ingredient = listOfIngredients.get(i);
-		  ingredient.setQuantity(ingredient.getQuantity()*2);	  
+		  DishIngredient ingredient = new DishIngredient();
+		  ingredient.setQuantity(listOfIngredients.get(i).getQuantity()*2);
+		  ingredient.setIngredient(listOfIngredients.get(i).getIngredient());
+		  newIngredients.add(ingredient);
 		}
 		return listOfIngredients;
 	}
