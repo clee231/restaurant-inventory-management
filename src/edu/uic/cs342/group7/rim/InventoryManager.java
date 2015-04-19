@@ -79,4 +79,24 @@ public class InventoryManager {
   }
   
   
+  public int addItems(ArrayList<Ingredient> items) {
+    Iterator<Ingredient> ingredientItr = items.iterator();
+    Ingredient ingredient;
+    Iterator<Quantity> quantityItr;
+    Ingredient databaseIngredient;
+    int quantityAdded = 0;
+    
+    while(ingredientItr.hasNext()) {
+      ingredient = ingredientItr.next();
+      databaseIngredient = database.get(ingredient.getName());
+      quantityItr = ingredient.createIterator();
+      while(quantityItr.hasNext()) {
+        databaseIngredient.addQuantity(quantityItr.next());
+        ++quantityAdded;
+      }
+    }
+    
+    return quantityAdded;
+  }
+  
 }

@@ -14,7 +14,6 @@ public class Ingredient {
   private String name;
   private ArrayList<Quantity> list = new ArrayList<Quantity>();
   
-  
   public Ingredient(String ingredientName) {
     this.name = ingredientName;
   }
@@ -108,5 +107,9 @@ public class Ingredient {
     }
     
     return numberOfRemoved;
+  }
+  
+  public Iterator<Quantity> createIterator() {
+    return this.list.iterator();
   }
 }
