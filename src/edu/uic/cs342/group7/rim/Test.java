@@ -207,6 +207,18 @@ public class Test {
     System.out.println("******** Ordering Dishes **********");
     System.out.println("Ordering: " + dish1 + " Size: " + size1);
     System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
   }
   
 }

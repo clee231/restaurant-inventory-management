@@ -71,7 +71,7 @@ public class InventoryManager {
       totalNeeded = dishIngredient.getQuantity();
       
       ingredientEntry = database.get(dishIngredient.getIngredient().getName());
-      
+      ingredientEntry.getIngredient(totalNeeded);
     }
     madeDish = true;
     
