@@ -102,6 +102,15 @@ public class Test {
   }
   
   public static void addIngredients(Api api) {
+    Ingredient placeing1 = new Ingredient("Tomato");
+    Ingredient placeing2 = new Ingredient("Flour");
+    Ingredient placeing3 = new Ingredient("Sugar");
+    ArrayList<Ingredient> inglist = new ArrayList<Ingredient>();
+    inglist.add(placeing1);
+    inglist.add(placeing2);
+    inglist.add(placeing3);
+    api.loadIngredients(inglist);
+    
     Ingredient ing1 = new Ingredient("Tomato");
     Ingredient ing2 = new Ingredient("Flour");
     Ingredient ing3 = new Ingredient("Sugar");
