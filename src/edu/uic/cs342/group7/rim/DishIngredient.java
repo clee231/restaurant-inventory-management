@@ -4,6 +4,13 @@ public class DishIngredient {
 	private Ingredient ingredient;
 	private int quantity;
 	
+	public DishIngredient(Ingredient ing, int quant){
+		ingredient = ing;
+		quantity = quant;
+	}
+	
+	public DishIngredient(){}
+	
 	public Ingredient getIngredient(){
 		return ingredient;
 	}

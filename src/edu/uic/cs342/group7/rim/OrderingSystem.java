@@ -2,8 +2,8 @@ package edu.uic.cs342.group7.rim;
 import java.util.ArrayList;
 
 public class OrderingSystem {
-	private ArrayList<Observer> listOfObserver;
-	private ArrayList<Dish> dishes;
+	private ArrayList<Observer> listOfObserver = new ArrayList<Observer>();
+	private ArrayList<Dish> dishes = new ArrayList<Dish>();
 	private DishSize dishSize;
 	
 	public boolean orderDish(String dishName){
