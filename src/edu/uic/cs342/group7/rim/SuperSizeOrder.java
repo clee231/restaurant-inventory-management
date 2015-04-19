@@ -1,6 +1,7 @@
 package edu.uic.cs342.group7.rim;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author
@@ -18,13 +19,17 @@ public class SuperSizeOrder implements DishSize {
 	// This method will double the quanitites needed for an ingredient
 	public ArrayList<DishIngredient> getIngredients(ArrayList<DishIngredient> listOfIngredients){	
 		ArrayList<DishIngredient> newIngredients = new ArrayList<DishIngredient>();
-		for(int i = 0; i < listOfIngredients.size(); i++){
+		Iterator<DishIngredient> itr = listOfIngredients.iterator();
+		while(itr.hasNext()) {
 		  DishIngredient ingredient = new DishIngredient();
-		  ingredient.setQuantity(listOfIngredients.get(i).getQuantity()*2);
-		  ingredient.setIngredient(listOfIngredients.get(i).getIngredient());
+		  DishIngredient temp = itr.next();
+		  
+		  ingredient.setIngredient(temp.getIngredient());
+		  ingredient.setQuantity(temp.getQuantity()*2);
 		  newIngredients.add(ingredient);
 		}
-		return listOfIngredients;
+
+		return newIngredients;
 	}
 
 }
