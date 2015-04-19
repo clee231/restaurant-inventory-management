@@ -12,4 +12,8 @@ public class Observer {
 		dishesOrdered.clear();
 	}
 	
+	public ArrayList<Dish> getDishesOrdered(){
+		return dishesOrdered;
+	}
+	
 }

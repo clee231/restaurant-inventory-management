@@ -59,4 +59,8 @@ public class OrderingSystem {
 	public void setDishes(ArrayList<Dish> dishList){
 		dishes = dishList;
 	}
+	
+	public void setDishSize(DishSize size){
+		dishSize = size;
+	}
 }
