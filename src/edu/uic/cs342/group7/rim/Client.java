@@ -169,7 +169,8 @@ public class Client {
 				Ingredient ingredientStaged = ingreds.get(ingredientToAdd);
 				Quantity newQuantity = new Quantity();
 				newQuantity.setCount(quantityToAdd);
-				newQuantity.setDate(new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]),Integer.parseInt(ymd[2])).getTime());
+				GregorianCalendar itemDate = new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]),Integer.parseInt(ymd[2]));
+				newQuantity.setDate(itemDate.getTime());
 				ingredientStaged.addQuantity(newQuantity);
 				toBeAdded.add(ingredientStaged);
 				connection.addItemsToInventory(toBeAdded);
