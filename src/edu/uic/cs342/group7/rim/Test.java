@@ -9,6 +9,7 @@ public class Test {
 
     fillWithDishes(api);
     addIngredients(api);
+    orderDishes(api);
   }
   
   public static void fillWithDishes(Api api) {
@@ -64,6 +65,7 @@ public class Test {
     d2.setDishIngredients(ding2);
     d3.setDishIngredients(ding3);
     
+    System.out.println("******* Adding Dishes ********");
     //Final Dish 1 Test
     System.out.print("Dish 1 Info: " + d1.getName() + " Ingredients: ");
     itr = d1.getIngredients().iterator();
@@ -89,7 +91,7 @@ public class Test {
       DishIngredient temp = itr.next();
       System.out.print(temp.getIngredient() + ", " + temp.getQuantity() + "; ");
     }
-    System.out.println("");
+    System.out.println("\n");
   }
   
   public static void addIngredients(Api api) {
@@ -139,6 +141,7 @@ public class Test {
     ing3.addQuantity(q3_2);
     ing3.addQuantity(q3_3);
     
+    System.out.println("******* Add Ingredients *********");
     //Final Ing 1 Test
     Iterator<Quantity> itr;
     System.out.print("Ing 1 Info: " + ing1.getName() + " Quantity: ");
@@ -165,7 +168,22 @@ public class Test {
       Quantity temp = itr.next();
       System.out.print(temp.getCount() + ", " + temp.getDate() + "; ");
     }
-    System.out.println("");
+    System.out.println("\n");
+  }
+  
+  public static void orderDishes(Api api) {
+    String dish1 = "Tomato Soup";
+    String dish2 = "Tomato Pie";
+    String dish3 = "Tomato Cookie";
+    
+    String size1 = "Full order";
+    String size2 = "Super size order";
+    String size3 = "Half order";
+    
+    
+    System.out.println("******** Ordering Dishes **********");
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
   }
   
 }
