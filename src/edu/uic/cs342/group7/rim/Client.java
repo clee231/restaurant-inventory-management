@@ -53,7 +53,7 @@ public class Client {
 		System.out.println("2. Add Items to Inventory");
 		System.out.println("3. End Day");
 		System.out.println("4. Forecast Shopping List");
-		System.out.println("5. Load Dishes from file");
+		System.out.println("5. Load data from file");
 		System.out.println("q. Quit");
 	}
 	/**
@@ -86,6 +86,12 @@ public class Client {
 		return false;
 	}
 	
+	/**
+	 * This will return the Ingredient object that is in the larger list of ingredients, identified by name.
+	 * @param haystack - The list of all ingredients.
+	 * @param needle - The string you are looking for, identifying the ingredient.
+	 * @return - Returns the Ingredient instance that was found in the haystack.
+	 */
 	public static Ingredient getIngredient(ArrayList<Ingredient> haystack, String needle) {
 		for (Ingredient item : haystack) {
 			if (item.getName().equalsIgnoreCase(needle)) {
@@ -95,11 +101,20 @@ public class Client {
 		return null;
 	}
 	
+	/**
+	 * Determines if a string is a number
+	 * @param str - A string to be determined to be a number or not.
+	 * @return - True if the string is parsable into a number. False if not a string parsable into a number.
+	 */
 	public static boolean isNumeric(String str)
 	{
 	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
 	}
 	
+	/**
+	 * Loads a dishes file to be added into the running database.
+	 * @param file - the filename / filepath from the current working directory. (one directory above the src folder)
+	 */
 	private static void loadDishesFile(String file) {
 		// This is Java 8... 5 lines to read the file...
 //		try {
@@ -159,6 +174,10 @@ public class Client {
 		connection.loadDishes(dishes);
 	}
 	
+	/**
+	 * Loads a inventory file to be added into the running database.
+	 * @param file - the filename / filepath from the current working directory. (one directory above the src folder)
+	 */
 	private static void loadInventoryFile(String file) {
 		BufferedReader br2 = null;
 		String line2 = null;
@@ -202,6 +221,24 @@ public class Client {
 			}
 		}
 	}
+	
+	/**
+	 * Calls the API and determines what we need to buy.
+	 * @param api - the connection/instance of the api.
+	 */
+	public static void forecastApi(Api api) {
+	    ArrayList<Ingredient> list = api.getShoppingList();
+	    api.addItemsToInventory(list);
+	    Iterator<Ingredient> itr = list.iterator();
+	    Ingredient ingredient;
+	    
+	    System.out.println("******** Shopping List **********");
+	    while(itr.hasNext()) {
+	      ingredient = itr.next();
+	      System.out.println("Ingredient: " + ingredient.getName() + " Quantity: " + ingredient.getTotalQuantityOfIngredient());
+	    }
+	    System.out.println("\n");
+	  }
 	/**
 	 * This function is the main driver and client for the our project.  This
 	 * main function will handle all the interface logic with the user.
@@ -214,9 +251,9 @@ public class Client {
 		System.out.println("+       Authors: Adrian Pasciak, Chase Lee, Christopher Schultz,               +");
 		System.out.println("+                Nerijus Gelezinis (no-show), Patrick Tam                      +");
 		System.out.println("+------------------------------------------------------------------------------+");
-		dishSizes.put("F", "Full Size Order");
-		dishSizes.put("S", "Super Size Order");
-		dishSizes.put("H", "Half Size Order");
+		dishSizes.put("F", "Full order");
+		dishSizes.put("S", "Super size order");
+		dishSizes.put("H", "Half order");
 		System.out.println("Current Status: NOT IMPLEMENTED");
 		printMenu();
 		System.out.println("\nSelect a menu option: ");
@@ -240,6 +277,10 @@ public class Client {
 				}
 				input = null;
 				input = s.nextLine();
+				while (Integer.parseInt(input) > dishes.size()) {
+					System.out.println("Invalid option. Try again:");
+					input = s.nextLine();
+				}
 				int getDish = Integer.parseInt(input);
 				System.out.println("Please select a dish size:");
 				System.out.println("S) Super Size Order");
@@ -251,11 +292,11 @@ public class Client {
 					input = s.nextLine();
 				}
 				String dSize = input;
-				boolean result = connection.orderDish(dishes.get(getDish).getName(), dishSizes.get(dSize.substring(0, 1)));
+				boolean result = connection.orderDish(dishes.get(getDish).getName(), dishSizes.get(dSize.substring(0, 1).toUpperCase()));
 				if (result) {
-					System.out.println(dishSizes.get(dSize.substring(0, 1)) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
+					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
 				}else {
-					System.out.println(dishSizes.get(dSize.substring(0, 1)) + " of " + dishes.get(getDish).getName() + " order failed.");
+					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " order failed.");
 				}
 				break;
 			case 2:
@@ -295,27 +336,27 @@ public class Client {
 			case 3:
 				printHeader("End Day");
 				connection.updateDate();
+				System.out.println("Moved on to the next day!");
 				break;
 			case 4:
 				printHeader("Forecast Shopping List");
-				ArrayList<Ingredient> shoplist = connection.getShoppingList();
-				System.out.println("We are below a threshold on these ingredients. Here are the current quantities:");
-				for (Ingredient item : shoplist) {
-					System.out.format("%d : %s\n", item.getTotalQuantityOfIngredient(), item.getName());
-				}
+				forecastApi(connection);
 				break;
 			case 5:
-				printHeader("Load Dishes from file");
-				System.out.println("Please specify a file name to load: ");
+				printHeader("Load Data from file");
+				System.out.println("Would you like to load from default files?: (Y/N)");
 				input = s.nextLine();
-				loadDishesFile(input);
-
-				break;
-			case 6:
-				printHeader("Load Ingredient Quantities from file");
-				System.out.println("Please specify a file name to load: ");
-				input = s.nextLine();
-				loadInventoryFile(input);
+				if (input.equalsIgnoreCase("Y")) {
+					loadDishesFile("data.csv");
+					loadInventoryFile("inventory.csv");
+				}else {
+					System.out.println("Please specify a file name to load for DISHES: ");
+					input = s.nextLine();
+					loadDishesFile(input);
+					System.out.println("Please specify a file name to load for INVENTORY: ");
+					input = s.nextLine();
+					loadInventoryFile(input);
+				}
 				break;
 			default:
 				System.out.println("***Incorrect input, try again.***");
