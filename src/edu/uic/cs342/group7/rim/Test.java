@@ -207,10 +207,21 @@ public class Test {
     
     
     System.out.println("******** Ordering Dishes **********");
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    System.out.println("Ordering: " + dish1 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish1, size1));
     System.out.println("Ordering: " + dish2 + " Size: " + size1);
     System.out.println("Outcome: " + api.orderDish(dish2, size1));
-    System.out.println("Ordering: " + dish2 + " Size: " + size1);
-    System.out.println("Outcome: " + api.orderDish(dish2, size1));
+    System.out.println("Ordering: " + dish2 + " Size: " + size2);
+    System.out.println("Outcome: " + api.orderDish(dish2, size2));
+    System.out.println("Ordering: " + dish3 + " Size: " + size2);
+    System.out.println("Outcome: " + api.orderDish(dish3, size2));
+    System.out.println("Ordering: " + dish3 + " Size: " + size1);
+    System.out.println("Outcome: " + api.orderDish(dish3, size1));
+    System.out.println("Ordering: " + dish3 + " Size: " + size3);
+    System.out.println("Outcome: " + api.orderDish(dish3, size3));
+    /*
     System.out.println("Ordering: " + dish2 + " Size: " + size1);
     System.out.println("Outcome: " + api.orderDish(dish2, size1));
     System.out.println("Ordering: " + dish1 + " Size: " + size1);
@@ -221,10 +232,21 @@ public class Test {
     System.out.println("Outcome: " + api.orderDish(dish1, size1));
     System.out.println("Ordering: " + dish1 + " Size: " + size1);
     System.out.println("Outcome: " + api.orderDish(dish1, size1));
+    */
+    System.out.println("\n");
   }
   
   
   public static void forecastApi(Api api) {
-    api.getShoppingList();
+    ArrayList<Ingredient> list = api.getShoppingList();
+    Iterator<Ingredient> itr = list.iterator();
+    Ingredient ingredient;
+    
+    System.out.println("******** Shopping List **********");
+    while(itr.hasNext()) {
+      ingredient = itr.next();
+      System.out.println("Ingredient: " + ingredient.getName() + " Quantity: " + ingredient.getTotalQuantityOfIngredient());
+    }
+    System.out.println("\n");
   }
 }

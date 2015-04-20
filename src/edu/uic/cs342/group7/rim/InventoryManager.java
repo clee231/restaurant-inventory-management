@@ -148,8 +148,15 @@ public class InventoryManager {
     while(itr.hasNext()) {
       ingredient = itr.next();
       databaseIng = database.get(ingredient.getName());
-      if(databaseIng.isIngredientAvail(ingredient.getFirstQuantity().getCount())) {
+      int availableIng = databaseIng.getTotalQuantityOfIngredient();
+      int lastTimeUsage = ingredient.getFirstQuantity().getCount();
+      int predictedDeficit = availableIng - lastTimeUsage;
+      
+      if(predictedDeficit >= 0) {
         itr.remove();
+      }
+      else {
+        ingredient.getFirstQuantity().setCount(-predictedDeficit);
       }
     }
     return consolidatedIngHist;
@@ -195,7 +202,7 @@ public class InventoryManager {
         dishIng = dishIngItr.next();
         ingredient = ingredientCount.get(dishIng.getIngredient().getName());
         q = ingredient.getFirstQuantity();
-        q.setCount(q.getCount() + 1);
+        q.setCount(q.getCount() + dishIng.getQuantity());
       }
     }
     
