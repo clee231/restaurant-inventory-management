@@ -8,10 +8,11 @@ public class Test {
     Api api =  new Api();
 
     fillWithDishes(api);
-    addIngredients(api);
-    orderDishes(api);
-    forecastApi(api);
-    orderDishes2(api);
+    //addIngredients(api);
+    //orderDishes(api);
+    //forecastApi(api);
+    addSpoiledIngredients(api);
+    updateDateTest(api);
   }
   
   public static void fillWithDishes(Api api) {
@@ -236,49 +237,10 @@ public class Test {
     */
     System.out.println("\n");
   }
-  public static void orderDishes2(Api api) {
-	    String dish1 = "Tomato Soup";
-	    String dish2 = "Tomato Pie";
-	    String dish3 = "Tomato Cookie";
-	    
-	    String size1 = "Full order";
-	    String size2 = "Super size order";
-	    String size3 = "Half order";
-	    
-	    
-	    System.out.println("******** Ordering Dishes **********");
-	    System.out.println("Ordering: " + dish1 + " Size: " + size2);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size2));
-	    System.out.println("Ordering: " + dish1 + " Size: " + size2);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size2));
-	    /*System.out.println("Ordering: " + dish2 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish2, size1));
-	    System.out.println("Ordering: " + dish2 + " Size: " + size2);
-	    System.out.println("Outcome: " + api.orderDish(dish2, size2));
-	    System.out.println("Ordering: " + dish3 + " Size: " + size2);
-	    System.out.println("Outcome: " + api.orderDish(dish3, size2));
-	    System.out.println("Ordering: " + dish3 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish3, size1));
-	    System.out.println("Ordering: " + dish3 + " Size: " + size3);
-	    System.out.println("Outcome: " + api.orderDish(dish3, size3));
-
-	    System.out.println("Ordering: " + dish2 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish2, size1));
-	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
-	    System.out.println("Ordering: " + dish1 + " Size: " + size3);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size3));
-	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
-	    System.out.println("Ordering: " + dish1 + " Size: " + size1);
-	    System.out.println("Outcome: " + api.orderDish(dish1, size1));
-	    */
-	    System.out.println("\n");
-	  } 
+  
   
   public static void forecastApi(Api api) {
     ArrayList<Ingredient> list = api.getShoppingList();
-    api.addItemsToInventory(list);
     Iterator<Ingredient> itr = list.iterator();
     Ingredient ingredient;
     
@@ -288,5 +250,62 @@ public class Test {
       System.out.println("Ingredient: " + ingredient.getName() + " Quantity: " + ingredient.getTotalQuantityOfIngredient());
     }
     System.out.println("\n");
+  }
+  
+  public static void addSpoiledIngredients(Api api) {
+    Ingredient placeing1 = new Ingredient("Tomato");
+    Ingredient placeing2 = new Ingredient("Flour");
+    Ingredient placeing3 = new Ingredient("Sugar");
+    ArrayList<Ingredient> inglist = new ArrayList<Ingredient>();
+    inglist.add(placeing1);
+    inglist.add(placeing2);
+    inglist.add(placeing3);
+    api.loadIngredients(inglist);
+    
+    Ingredient ing1 = new Ingredient("Tomato");
+    Ingredient ing2 = new Ingredient("Flour");
+    Ingredient ing3 = new Ingredient("Sugar");
+    
+    Quantity q1 = new Quantity();
+    Quantity q1_w = new Quantity();
+    Quantity q2 = new Quantity();
+    Quantity q3 = new Quantity();
+
+    
+    q1.setCount(4);
+    q1_w.setCount(2);
+    q2.setCount(5);
+    q3.setCount(4);
+    
+    Calendar date1 = new GregorianCalendar();
+    Calendar date1_w = new GregorianCalendar();
+    Calendar date2 = new GregorianCalendar();
+    Calendar date3 = new GregorianCalendar();
+
+    date1.set(2014, 4, 19);
+    date1_w.set(2016, 4, 19);
+    date2.set(2014, 4, 20);
+    date3.set(2014, 5, 15);
+    
+    q1.setDate(date1.getTime());
+    q1_w.setDate(date1_w.getTime());
+    q2.setDate(date2.getTime());
+    q3.setDate(date3.getTime());
+
+    ing1.addQuantity(q1);
+    ing1.addQuantity(q1_w);
+    ing2.addQuantity(q2);
+    ing3.addQuantity(q3);
+    
+    ArrayList<Ingredient> ingred = new ArrayList<Ingredient>();
+    ingred.add(ing1);
+    ingred.add(ing2);
+    ingred.add(ing3);
+    api.addItemsToInventory(ingred);
+  }
+  
+  public static void updateDateTest(Api api) {
+    api.updateDate();
+    
   }
 }

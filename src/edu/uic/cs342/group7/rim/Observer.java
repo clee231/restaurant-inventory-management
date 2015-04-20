@@ -9,7 +9,7 @@ public class Observer {
 	}
 	
 	public void resetList(){
-		dishesOrdered.clear();
+		dishesOrdered =  new ArrayList<Dish>();
 	}
 	
 	public Dish removeLastAdded() {

@@ -140,9 +140,8 @@ public class Ingredient{
    */
   public int removedSpoiledQuantity(Date date) {
     int numberOfRemoved = 0;
-    
     while(true) {
-      if(this.list.get(0).getDate().compareTo(date) > 0) {
+      if(this.list.size() > 0 && this.list.get(0).getDate().compareTo(date) < 0) {
         this.list.remove(0);
         ++numberOfRemoved;
       }
