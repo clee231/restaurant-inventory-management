@@ -147,9 +147,12 @@ public class Client {
 				Dish currentDish = new Dish(dishRecipe, elements[0]);
 				dishes.add(currentDish);
 			}
-	 
+			connection.loadIngredients(ingreds);
+			connection.loadDishes(dishes);
+			System.out.println("Loaded Dishes: " + dishes.size() + " dishes loaded...");
+			System.out.println("Loaded Ingredients: " + ingreds.size() + " recipe ingredients loaded...");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("File Not Found.  Skipped dishes loading.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -161,10 +164,6 @@ public class Client {
 				}
 			}
 		}
-		connection.loadIngredients(ingreds);
-		connection.loadDishes(dishes);
-		System.out.println("Loaded Dishes: " + dishes.size() + " dishes loaded...");
-		System.out.println("Loaded Ingredients: " + ingreds.size() + " recipe ingredients loaded...");
 	}
 	
 	/**
@@ -198,11 +197,9 @@ public class Client {
 				}
 			}
 			System.out.println("Loading Inventory: Committed " + toBeAdded2.size() + " distinct items");
-			
 			connection.addItemsToInventory(toBeAdded2);
-			 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("File Not Found.  Skipped inventory loading.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
