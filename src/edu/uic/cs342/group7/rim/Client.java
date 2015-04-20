@@ -254,7 +254,6 @@ public class Client {
 		dishSizes.put("F", "Full order");
 		dishSizes.put("S", "Super size order");
 		dishSizes.put("H", "Half order");
-		System.out.println("Current Status: NOT IMPLEMENTED");
 		printMenu();
 		System.out.println("\nSelect a menu option: ");
 		boolean runflag = true;
