@@ -33,15 +33,6 @@ public class Client {
 	static ArrayList<Dish> dishes = new ArrayList<Dish>();
 	static Api connection = new Api();
 	static HashMap<String, String> dishSizes = new HashMap<String, String>();
-	
-
-	/**
-	 * Constructor Stub
-	 */
-	public Client() {
-		// TODO Auto-generated constructor stub
-		// TODO We should create an instance of the RIM API in this class.
-	}
 
 	/**
 	 * This function will print out the menu for the user to select from.
@@ -172,6 +163,8 @@ public class Client {
 		}
 		connection.loadIngredients(ingreds);
 		connection.loadDishes(dishes);
+		System.out.println("Loaded Dishes: " + dishes.size() + " dishes loaded...");
+		System.out.println("Loaded Ingredients: " + ingreds.size() + " recipe ingredients loaded...");
 	}
 	
 	/**
@@ -204,7 +197,8 @@ public class Client {
 					//System.out.println("Added: " + newQuantity2.getCount() + " " + ingredientName + "(s) set to expire on " + newQuantity2.getDate().toString());
 				}
 			}
-			//System.out.println("Committed " + toBeAdded2.size() + " distinct items");
+			System.out.println("Loading Inventory: Committed " + toBeAdded2.size() + " distinct items");
+			
 			connection.addItemsToInventory(toBeAdded2);
 			 
 		} catch (FileNotFoundException e) {
@@ -227,17 +221,24 @@ public class Client {
 	 * @param api - the connection/instance of the api.
 	 */
 	public static void forecastApi(Api api) {
-	    ArrayList<Ingredient> list = api.getShoppingList();
-	    api.addItemsToInventory(list);
-	    Iterator<Ingredient> itr = list.iterator();
-	    Ingredient ingredient;
-	    
-	    System.out.println("******** Shopping List **********");
-	    while(itr.hasNext()) {
-	      ingredient = itr.next();
-	      System.out.println("Ingredient: " + ingredient.getName() + " Quantity: " + ingredient.getTotalQuantityOfIngredient());
+		ArrayList<Ingredient> list = null;
+		try {
+			list = api.getShoppingList();
+		} catch (NullPointerException e) {
+			System.out.println("There is nothing on the shopping list.");
+		}
+	    if (list != null) {
+		    //api.addItemsToInventory(list);
+		    Iterator<Ingredient> itr = list.iterator();
+		    Ingredient ingredient;
+		    
+		    System.out.println("******** Shopping List **********");
+		    while(itr.hasNext()) {
+		      ingredient = itr.next();
+		      System.out.println("Ingredient: " + ingredient.getName() + " Quantity: " + ingredient.getTotalQuantityOfIngredient());
+		    }
+		    System.out.println("\n");
 	    }
-	    System.out.println("\n");
 	  }
 	/**
 	 * This function is the main driver and client for the our project.  This
@@ -278,7 +279,7 @@ public class Client {
 				}
 				input = null;
 				input = s.nextLine();
-				while (Integer.parseInt(input) > dishes.size()) {
+				while ((input.length() >= 1) && (Integer.parseInt(input) > dishes.size())) {
 					System.out.println("Invalid option. Try again:");
 					input = s.nextLine();
 				}
@@ -293,7 +294,7 @@ public class Client {
 					input = s.nextLine();
 				}
 				String dSize = input;
-				boolean result = connection.orderDish(dishes.get(getDish).getName(), dishSizes.get(dSize.substring(0, 1).toUpperCase()));
+				boolean result = connection.orderDish(dishes.get(getDish).getName(), dSize.substring(0, 1).toUpperCase());
 				if (result) {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
 				}else {
