@@ -243,7 +243,7 @@ public class Client {
 	 * @param args - This parameter is not used.
 	 */
 	public static void main(String[] args) {
-		String version = "1.00";
+		String version = "1.10";
 		loadDishesFile("data.csv");
 		loadInventoryFile("inventory.csv");
 		System.out.println("+------------------------------------------------------------------------------+");
