@@ -41,15 +41,15 @@ public class Api {
 	//This will receive a dish name and dish size from the user and will create a new instance of dishSize
     // Depending on what the user entered and then pass the dish name and dish size to the ordering system
 	public boolean orderDish(String dishName, String dishSize){
-		if(dishSize.equals("Full order")){
+		if(dishSize.equals("F")){
 			size = new FullOrder();
 			orderingSystem.setDishSize(size);
 		}
-		else if(dishSize.equals("Super size order")){
+		else if(dishSize.equals("S")){
 			size = new SuperSizeOrder();
 			orderingSystem.setDishSize(size);
 		}
-		else if(dishSize.equals("Half order")){
+		else if(dishSize.equals("H")){
 			size = new HalfOrder();
 			orderingSystem.setDishSize(size);
 		}
@@ -120,6 +120,7 @@ public class Api {
 		currentDate = calendar.getTime();
 		//Reset the observer at the end of the day
 		previousDayDishes = observer.getDishesOrdered();
+		// Will remove the expired dishes
 		inventory.removedSpoiledIngredients(currentDate);
 		observer.resetList();
 	}
