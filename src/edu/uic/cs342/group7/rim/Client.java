@@ -303,7 +303,7 @@ public class Client {
 				printHeader("Add Items to Inventory Quantity");
 				count = 0;
 				for(Ingredient item : ingreds) {
-					System.out.println(count + ") " + item.getName() + " - " + item.getTotalQuantityOfIngredient());
+					System.out.println(count + ") " + item.getName());
 					count++;
 				}
 				System.out.println("Please select the ingredient you would like to add quantity to:");
