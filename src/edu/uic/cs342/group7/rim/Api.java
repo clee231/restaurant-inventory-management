@@ -28,6 +28,7 @@ public class Api {
 	private Calendar calendar =  Calendar.getInstance();
 	private DishSize size;
 	private Dish dish = new Dish();
+	private Ingredient ing;
 	
 	// When new instance of Api is created an observer will be added to keep track of dishes ordered
 	public Api(){
@@ -82,8 +83,19 @@ public class Api {
 	//This function will receive an arrayList of Dish from the ordering system to pass it to the inventory manager
 	//Then it will receive an arrayList of Ingredient from the inventory manager and return that to the client
 	public ArrayList<Ingredient> getShoppingList(){
+		calendar.setTime(currentDate);
+		// Foods will expire after 7 days or 1 week
+		calendar.add(Calendar.DATE, 7);
 		ArrayList<Dish> dishHistory = observer.getDishesOrdered();
-		return inventory.forecast(dishHistory);
+		ArrayList<Ingredient> shoppingList = new ArrayList<Ingredient>();
+		shoppingList = inventory.forecast(dishHistory);
+		//Go through each ingredient and add a Date using the calendar class as a helper
+		for(Ingredient i : shoppingList){
+			i.getFirstQuantity().setDate(calendar.getTime());			
+		}
+		//Add the shopping list to the inventory
+		inventory.addItems(shoppingList);
+		return shoppingList;
 	}
 
 	
@@ -104,6 +116,7 @@ public class Api {
 		calendar.setTime(currentDate);
 		calendar.add(Calendar.DATE, 1);
 		currentDate = calendar.getTime();
+		//Reset the observer at the end of the day
 		observer.resetList();
 	}
 }
