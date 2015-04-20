@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 //Java 8 routines
 //import java.io.IOException;
 //import java.nio.charset.StandardCharsets;
@@ -52,7 +54,6 @@ public class Client {
 		System.out.println("3. End Day");
 		System.out.println("4. Forecast Shopping List");
 		System.out.println("5. Load Dishes from file");
-		System.out.println("6. Load Ingredient Quantities from file");
 		System.out.println("q. Quit");
 	}
 	/**
@@ -70,6 +71,12 @@ public class Client {
 		System.out.println("+" + dash + "+");
 	}
 	
+	/**
+	 * This will determine if a ingredient is in the larger list of ingredients, identified by name.
+	 * @param haystack - The list of all ingredients
+	 * @param needle - The string you are looking for, identifying the ingredient
+	 * @return - true if the ingredient is found, false if not.
+	 */
 	public static boolean ingredientExists(ArrayList<Ingredient> haystack, String needle) {
 		for (Ingredient item : haystack) {
 			if (item.getName().equalsIgnoreCase(needle)) {
@@ -77,6 +84,15 @@ public class Client {
 			}
 		}
 		return false;
+	}
+	
+	public static Ingredient getIngredient(ArrayList<Ingredient> haystack, String needle) {
+		for (Ingredient item : haystack) {
+			if (item.getName().equalsIgnoreCase(needle)) {
+				return item;
+			}
+		}
+		return null;
 	}
 	/**
 	 * This function is the main driver and client for the our project.  This
@@ -145,13 +161,20 @@ public class Client {
 					System.out.println("Invalid quantity, try again:");
 					quantityToAdd = s.nextInt();
 				}
+				input =  s.nextLine(); // Eat up new line.
+				System.out.println("When is the expiration?: yy/mm/dd");
+				input =  s.nextLine();
+				String[] ymd = input.split("/");
 				ArrayList<Ingredient> toBeAdded = new ArrayList<Ingredient>();
-				for(int i = 0; i < quantityToAdd; i++) {
-					toBeAdded.add(new Ingredient(ingreds.get(ingredientToAdd).getName()));
-				}
+				Ingredient ingredientStaged = ingreds.get(ingredientToAdd);
+				Quantity newQuantity = new Quantity();
+				newQuantity.setCount(quantityToAdd);
+				GregorianCalendar itemDate = new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]),Integer.parseInt(ymd[2]));
+				newQuantity.setDate(itemDate.getTime());
+				ingredientStaged.addQuantity(newQuantity);
+				toBeAdded.add(ingredientStaged);
 				connection.addItemsToInventory(toBeAdded);
 				System.out.println(toBeAdded.size() + " " + ingreds.get(ingredientToAdd).getName() + " have been added to the inventory!");
-				input =  s.nextLine(); // Eat up new line.
 				break;
 			case 3:
 				printHeader("End Day");
@@ -203,7 +226,7 @@ public class Client {
 							}else {
 								System.out.println("Skipping ingredient.");
 							}
-							DishIngredient currentDishIngredient = new DishIngredient(new Ingredient(elemquant[0]), Integer.parseInt(elemquant[1]));
+							DishIngredient currentDishIngredient = new DishIngredient(getIngredient(ingreds, elemquant[0]), Integer.parseInt(elemquant[1]));
 							dishRecipe.add(currentDishIngredient);
 						}
 						Dish currentDish = new Dish(dishRecipe, elements[0]);
