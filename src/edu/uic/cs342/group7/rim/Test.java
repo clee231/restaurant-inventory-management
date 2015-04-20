@@ -1,7 +1,7 @@
 package edu.uic.cs342.group7.rim;
-
+ 
 import java.util.*;
-
+  
 public class Test {
   
   public static void main(String[] args) {

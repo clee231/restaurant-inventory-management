@@ -161,7 +161,7 @@ public class InventoryManager {
     }
     return consolidatedIngHist;
   }
-  
+   
   
   /**
    * Creates a count of Ingredients needed for all of the dishes
