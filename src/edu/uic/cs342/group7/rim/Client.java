@@ -94,6 +94,114 @@ public class Client {
 		}
 		return null;
 	}
+	
+	public static boolean isNumeric(String str)
+	{
+	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+	}
+	
+	private static void loadDishesFile(String file) {
+		// This is Java 8... 5 lines to read the file...
+//		try {
+//			Files.lines(Paths.get(input), StandardCharsets.UTF_8).forEach(System.out::println);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		BufferedReader br = null;
+		String line = null;
+		try {
+			 
+			br = new BufferedReader(new FileReader(file));
+			while ((line = br.readLine()) != null) {
+				if (line.startsWith("#")) {
+					continue; // Comment detection
+				}
+				String[] elements = line.split(",");
+				ArrayList<DishIngredient> dishRecipe = new ArrayList<DishIngredient>();
+				
+				/**
+				 * For each line:
+				 * - Add an Ingredient if not exists in array
+				 * - Make a dishIngredient and append to list
+				 * - Create a Dish
+				 * - Add dish to dishArray
+				 */
+				for (int i = 1; i < elements.length; i++) {
+					String[] elemquant = elements[i].split(":");
+					Ingredient currentIngredient = new Ingredient(elemquant[0]);
+					if(!ingredientExists(ingreds, elemquant[0])) {
+						ingreds.add(currentIngredient);
+						System.out.println("Added " + currentIngredient.getName());
+					}else {
+						System.out.println("Skipping ingredient.");
+					}
+					DishIngredient currentDishIngredient = new DishIngredient(getIngredient(ingreds, elemquant[0]), Integer.parseInt(elemquant[1]));
+					dishRecipe.add(currentDishIngredient);
+				}
+				Dish currentDish = new Dish(dishRecipe, elements[0]);
+				dishes.add(currentDish);
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		connection.loadIngredients(ingreds);
+		connection.loadDishes(dishes);
+	}
+	
+	private static void loadInventoryFile(String file) {
+		BufferedReader br2 = null;
+		String line2 = null;
+		ArrayList<Ingredient> toBeAdded2 = new ArrayList<Ingredient>();
+		try {
+			 
+			br2 = new BufferedReader(new FileReader(file));
+			while ((line2 = br2.readLine()) != null) {
+				if (line2.startsWith("#")) {
+					continue; // Comment detection
+				}
+				String[] elements = line2.split(",");
+				String ingredientName = elements[0];
+				int curQuantity = Integer.parseInt(elements[1]);
+				String[] parseDate = elements[2].split("/");
+				GregorianCalendar date2 = new GregorianCalendar(Integer.parseInt(parseDate[0]),Integer.parseInt(parseDate[1]),Integer.parseInt(parseDate[2]));
+				if (ingredientExists(ingreds,ingredientName)) {
+					Ingredient ingredientToAdd2 = new Ingredient(ingredientName);
+					Quantity newQuantity2 = new Quantity();
+					newQuantity2.setCount(curQuantity);
+					newQuantity2.setDate(date2.getTime());
+					ingredientToAdd2.addQuantity(newQuantity2);
+					toBeAdded2.add(ingredientToAdd2);
+					System.out.println("Added: " + newQuantity2.getCount() + " " + ingredientName + "(s) set to expire on " + newQuantity2.getDate().toString());
+				}
+			}
+			System.out.println("Committed " + toBeAdded2.size() + " distinct items");
+			connection.addItemsToInventory(toBeAdded2);
+			 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br2 != null) {
+				try {
+					br2.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	/**
 	 * This function is the main driver and client for the our project.  This
 	 * main function will handle all the interface logic with the user.
@@ -118,6 +226,9 @@ public class Client {
 		String input = s.nextLine();
 		
 		while (!("q".equalsIgnoreCase(input))) {
+			while (!isNumeric(input)) {
+				input = s.nextLine(); // Grab any stay lines.
+			}
 			switch(Integer.parseInt(input)) {
 			case 1:
 				printHeader("Order Dish");
@@ -127,13 +238,18 @@ public class Client {
 					System.out.println(count +") "+ item.getName());
 					count++;
 				}
+				input = null;
 				input = s.nextLine();
 				int getDish = Integer.parseInt(input);
 				System.out.println("Please select a dish size:");
 				System.out.println("S) Super Size Order");
 				System.out.println("F) Full Size Order (Normal)");
 				System.out.println("H) Half Size Order");
+				input = null;
 				input = s.nextLine();
+				while (input.length() <= 0) {
+					input = s.nextLine();
+				}
 				String dSize = input;
 				boolean result = connection.orderDish(dishes.get(getDish).getName(), dishSizes.get(dSize.substring(0, 1)));
 				if (result) {
@@ -166,7 +282,7 @@ public class Client {
 				input =  s.nextLine();
 				String[] ymd = input.split("/");
 				ArrayList<Ingredient> toBeAdded = new ArrayList<Ingredient>();
-				Ingredient ingredientStaged = ingreds.get(ingredientToAdd);
+				Ingredient ingredientStaged = new Ingredient(ingreds.get(ingredientToAdd).getName());
 				Quantity newQuantity = new Quantity();
 				newQuantity.setCount(quantityToAdd);
 				GregorianCalendar itemDate = new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]),Integer.parseInt(ymd[2]));
@@ -174,7 +290,7 @@ public class Client {
 				ingredientStaged.addQuantity(newQuantity);
 				toBeAdded.add(ingredientStaged);
 				connection.addItemsToInventory(toBeAdded);
-				System.out.println(toBeAdded.size() + " " + ingreds.get(ingredientToAdd).getName() + " have been added to the inventory!");
+				System.out.println(newQuantity.getCount() + " " + ingreds.get(ingredientToAdd).getName() + " have been added to the inventory!");
 				break;
 			case 3:
 				printHeader("End Day");
@@ -192,67 +308,14 @@ public class Client {
 				printHeader("Load Dishes from file");
 				System.out.println("Please specify a file name to load: ");
 				input = s.nextLine();
-				// This is Java 8... 5 lines to read the file...
-//				try {
-//					Files.lines(Paths.get(input), StandardCharsets.UTF_8).forEach(System.out::println);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-				BufferedReader br = null;
-				String line = null;
-				try {
-					 
-					br = new BufferedReader(new FileReader(input));
-					while ((line = br.readLine()) != null) {
-						if (line.startsWith("#")) {
-							continue; // Comment detection
-						}
-						String[] elements = line.split(",");
-						ArrayList<DishIngredient> dishRecipe = new ArrayList<DishIngredient>();
-						
-						/**
-						 * For each line:
-						 * - Add an Ingredient if not exists in array
-						 * - Make a dishIngredient and append to list
-						 * - Create a Dish
-						 * - Add dish to dishArray
-						 */
-						for (int i = 1; i < elements.length; i++) {
-							String[] elemquant = elements[i].split(":");
-							Ingredient currentIngredient = new Ingredient(elemquant[0]);
-							if(!ingredientExists(ingreds, elemquant[0])) {
-								ingreds.add(currentIngredient);
-								System.out.println("Added " + currentIngredient.getName());
-							}else {
-								System.out.println("Skipping ingredient.");
-							}
-							DishIngredient currentDishIngredient = new DishIngredient(getIngredient(ingreds, elemquant[0]), Integer.parseInt(elemquant[1]));
-							dishRecipe.add(currentDishIngredient);
-						}
-						Dish currentDish = new Dish(dishRecipe, elements[0]);
-						dishes.add(currentDish);
-					}
-			 
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally {
-					if (br != null) {
-						try {
-							br.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				connection.loadIngredients(ingreds);
-				connection.loadDishes(dishes);
+				loadDishesFile(input);
 
 				break;
 			case 6:
 				printHeader("Load Ingredient Quantities from file");
-				
+				System.out.println("Please specify a file name to load: ");
+				input = s.nextLine();
+				loadInventoryFile(input);
 				break;
 			default:
 				System.out.println("***Incorrect input, try again.***");
