@@ -10,6 +10,7 @@ public class Test {
     fillWithDishes(api);
     addIngredients(api);
     orderDishes(api);
+    forecastApi(api);
   }
   
   public static void fillWithDishes(Api api) {
@@ -224,7 +225,6 @@ public class Test {
   
   
   public static void forecastApi(Api api) {
-    
-    
+    api.getShoppingList();
   }
 }

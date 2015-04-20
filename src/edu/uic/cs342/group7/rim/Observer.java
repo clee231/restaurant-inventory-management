@@ -2,7 +2,7 @@ package edu.uic.cs342.group7.rim;
 import java.util.ArrayList;
 
 public class Observer {
-	private ArrayList<Dish> dishesOrdered;
+	private ArrayList<Dish> dishesOrdered = new ArrayList<Dish>();
 	
 	public void updateList(Dish dish){
 		dishesOrdered.add(dish);
