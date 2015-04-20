@@ -1,5 +1,6 @@
 package edu.uic.cs342.group7.rim;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class OrderingSystem {
 	private ArrayList<Observer> listOfObserver = new ArrayList<Observer>();
@@ -34,24 +35,10 @@ public class OrderingSystem {
 		//second: get dish sizes
 		ArrayList<DishIngredient> ingredients = dishSize.getIngredients(dish.getIngredients());
 		dish.setDishIngredients(ingredients);
-		//third: check if ingredients are available for quantity and if it exists
-		/*for(DishIngredient ing : ingredients){
-			System.out.println(ing.getIngredient().isIngredientAvail(ing.getQuantity()));
-			System.out.println(ing.getIngredient().getName());
-			if(ing.getIngredient().isIngredientAvail(ing.getQuantity()) == false){
-				System.out.println("Here2!");
-				return false;
-			}
-			/*if(ing.getQuantity() > ing.getIngredient().getTotalQuantityOfIngredient()){
-				return false;
-			}*/
-		/*}
+
+		//tell observers
+		notifyObservers(dish);
 		
-		//here it means for sure all the ingredients are available... can now get them
-		for(DishIngredient ing : ingredients){
-			//ing.getIngredient() -> returns Ingredient.getIngredient(ing.getQuantity()) -> passes to Ingredient class to subtract number
-			ing.getIngredient().getIngredient(ing.getQuantity());
-		}*/
 		return dish;
 	}
 	
@@ -102,5 +89,15 @@ public class OrderingSystem {
 	//sets the DishSize according to class chosen
 	public void setDishSize(DishSize size){
 		dishSize = size;
+	}
+	
+	public void notifyObservers(Dish dish) {
+	  Iterator<Observer> itr = listOfObserver.iterator();
+	  Observer obs;
+	  
+	  while(itr.hasNext()) {
+	    obs = itr.next();
+	    obs.updateList(dish);
+	  }
 	}
 }

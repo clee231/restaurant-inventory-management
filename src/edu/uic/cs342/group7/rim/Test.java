@@ -194,6 +194,7 @@ public class Test {
     api.addItemsToInventory(ingrds);
   }
   
+  
   public static void orderDishes(Api api) {
     String dish1 = "Tomato Soup";
     String dish2 = "Tomato Pie";
@@ -221,4 +222,9 @@ public class Test {
     System.out.println("Outcome: " + api.orderDish(dish1, size1));
   }
   
+  
+  public static void forecastApi(Api api) {
+    
+    
+  }
 }

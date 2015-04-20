@@ -12,6 +12,11 @@ public class Observer {
 		dishesOrdered.clear();
 	}
 	
+	public Dish removeLastAdded() {
+	  int size = dishesOrdered.size();
+	  return dishesOrdered.remove(size - 1);
+	}
+	
 	public ArrayList<Dish> getDishesOrdered(){
 		return dishesOrdered;
 	}

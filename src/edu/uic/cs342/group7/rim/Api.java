@@ -61,7 +61,14 @@ public class Api {
 			System.out.println("Dish does not exist");
 			return false; 
 		}
-		return inventory.getIngredientsForDish(dish);
+		boolean dishMade = inventory.getIngredientsForDish(dish);
+		
+		//Remove Dish if could not make
+		if(!dishMade) {
+		  observer.removeLastAdded();
+		}
+		
+		return dishMade;
 		//orderingSystem.Dish(saveDish);
 	}
 	
@@ -98,5 +105,4 @@ public class Api {
 		calendar.add(Calendar.DATE, 1);
 		currentDate = calendar.getTime();		
 	}
-	
 }
