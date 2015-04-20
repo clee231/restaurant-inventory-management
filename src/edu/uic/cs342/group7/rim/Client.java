@@ -146,9 +146,9 @@ public class Client {
 					Ingredient currentIngredient = new Ingredient(elemquant[0]);
 					if(!ingredientExists(ingreds, elemquant[0])) {
 						ingreds.add(currentIngredient);
-						System.out.println("Added " + currentIngredient.getName());
+						//System.out.println("Added " + currentIngredient.getName());
 					}else {
-						System.out.println("Skipping ingredient.");
+						//System.out.println("Skipping ingredient.");
 					}
 					DishIngredient currentDishIngredient = new DishIngredient(getIngredient(ingreds, elemquant[0]), Integer.parseInt(elemquant[1]));
 					dishRecipe.add(currentDishIngredient);
@@ -201,10 +201,10 @@ public class Client {
 					newQuantity2.setDate(date2.getTime());
 					ingredientToAdd2.addQuantity(newQuantity2);
 					toBeAdded2.add(ingredientToAdd2);
-					System.out.println("Added: " + newQuantity2.getCount() + " " + ingredientName + "(s) set to expire on " + newQuantity2.getDate().toString());
+					//System.out.println("Added: " + newQuantity2.getCount() + " " + ingredientName + "(s) set to expire on " + newQuantity2.getDate().toString());
 				}
 			}
-			System.out.println("Committed " + toBeAdded2.size() + " distinct items");
+			//System.out.println("Committed " + toBeAdded2.size() + " distinct items");
 			connection.addItemsToInventory(toBeAdded2);
 			 
 		} catch (FileNotFoundException e) {
@@ -246,6 +246,8 @@ public class Client {
 	 */
 	public static void main(String[] args) {
 		String version = "1.00";
+		loadDishesFile("data.csv");
+		loadInventoryFile("inventory.csv");
 		System.out.println("+------------------------------------------------------------------------------+");
 		System.out.format("+                    Restaurant Inventory Management                     v%s +\n", version);
 		System.out.println("+       Authors: Adrian Pasciak, Chase Lee, Christopher Schultz,               +");
@@ -307,7 +309,7 @@ public class Client {
 				}
 				System.out.println("Please select the ingredient you would like to add quantity to:");
 				int ingredientToAdd = s.nextInt();
-				while(ingredientToAdd > ingreds.size() || ingredientToAdd < 0) {
+				while(ingredientToAdd >= ingreds.size() || ingredientToAdd < 0) {
 					System.out.println("Invalid option, try again:");
 					ingredientToAdd = s.nextInt();
 				}
