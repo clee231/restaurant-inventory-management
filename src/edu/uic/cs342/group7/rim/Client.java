@@ -42,9 +42,10 @@ public class Client {
 		printHeader("Menu");
 		System.out.println("1. Order Dish");
 		System.out.println("2. Add Items to Inventory");
-		System.out.println("3. End Day");
-		System.out.println("4. Forecast Shopping List");
-		System.out.println("5. Load data from file");
+		System.out.println("3. Current Inventory");
+		System.out.println("4. End Day");
+		System.out.println("5. Forecast Shopping List");
+		System.out.println("6. Load data from file");
 		System.out.println("q. Quit");
 	}
 	/**
@@ -333,15 +334,19 @@ public class Client {
 				System.out.println(newQuantity.getCount() + " " + ingreds.get(ingredientToAdd).getName() + " have been added to the inventory!");
 				break;
 			case 3:
+				printHeader("Current Inventory Listing");
+				
+				break;
+			case 4:
 				printHeader("End Day");
 				connection.updateDate();
 				System.out.println("Moved on to the next day!");
 				break;
-			case 4:
+			case 5:
 				printHeader("Forecast Shopping List");
 				forecastApi(connection);
 				break;
-			case 5:
+			case 6:
 				printHeader("Load Data from file");
 				System.out.println("Would you like to load from default files?: (Y/N)");
 				input = s.nextLine();
