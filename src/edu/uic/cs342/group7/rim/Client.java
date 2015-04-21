@@ -35,6 +35,7 @@ public class Client {
 	static Api connection = new Api();
 	static HashMap<String, String> dishSizes = new HashMap<String, String>();
 	static GregorianCalendar cal =  new GregorianCalendar();
+	static ArrayList<DishIngredient> currentInventory = new ArrayList<DishIngredient>();
 
 	/**
 	 * This function will print out the menu for the user to select from.
@@ -222,10 +223,10 @@ public class Client {
 	 * Calls the API and determines what we need to buy.
 	 * @param api - the connection/instance of the api.
 	 */
-	public static void forecastApi(Api api) {
+	public static void forecastApi(Api api, boolean autoIncludeInventory) {
 		ArrayList<Ingredient> list = null;
 		try {
-			list = api.getShoppingList();
+			list = api.getShoppingList(autoIncludeInventory);
 		} catch (NullPointerException e) {
 			System.out.println("There is nothing on the shopping list.");
 		}
@@ -301,6 +302,11 @@ public class Client {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
 				}else {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " order failed. System does not have enough ingredients to fulfill the order.");
+					System.out.println("A Full Size Order of '" + dishes.get(getDish).getName() + "' requires the following ingredients: ");
+					Dish curDish = dishes.get(getDish);
+					for(DishIngredient item : curDish.getIngredients()) {
+						System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), item.getIngredient().getTotalQuantityOfIngredient());
+					}
 				}
 				break;
 			case 2:
@@ -339,7 +345,11 @@ public class Client {
 				break;
 			case 3:
 				printHeader("Current Inventory Listing");
-				
+				currentInventory = connection.getCurrentInventory();
+				System.out.format("%15s | %8s\n---------------------------\n", "Ingredient", "Quantity");
+				for(DishIngredient item : currentInventory) {
+					System.out.format("%15s | %7d\n", item.getIngredient().getName(), item.getQuantity());
+				}
 				break;
 			case 4:
 				printHeader("End Day");
@@ -348,7 +358,18 @@ public class Client {
 				break;
 			case 5:
 				printHeader("Forecast Shopping List");
-				forecastApi(connection);
+				System.out.println("Would you like to auto-add the shopping list to the inventory?: (Y/N)");
+				System.out.println("Note the auto-added ingredients have a 7-day expiration.");
+				input = s.nextLine();
+				while(!input.equalsIgnoreCase("Y") && !input.equalsIgnoreCase("N")) {
+					System.out.println("Invalid input. Try again.:");
+					input = s.nextLine();
+				}
+				if (input.equalsIgnoreCase("Y")) {
+					forecastApi(connection, true);
+				} else {
+					forecastApi(connection, false);
+				}
 				break;
 			case 6:
 				printHeader("Load Data from file");
