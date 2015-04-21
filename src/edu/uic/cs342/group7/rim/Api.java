@@ -28,7 +28,6 @@ public class Api {
 	private Calendar calendar =  Calendar.getInstance();
 	private DishSize size;
 	private Dish dish = new Dish();
-	private Ingredient ing;
 	private ArrayList<Dish> previousDayDishes;
 	
 	// When new instance of Api is created an observer will be added to keep track of dishes ordered
