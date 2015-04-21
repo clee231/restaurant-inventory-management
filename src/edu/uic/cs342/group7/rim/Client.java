@@ -295,7 +295,7 @@ public class Client {
 				if (result) {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
 				}else {
-					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " order failed.");
+					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " order failed. System does not have enough ingredients to fulfill the order.");
 				}
 				break;
 			case 2:
