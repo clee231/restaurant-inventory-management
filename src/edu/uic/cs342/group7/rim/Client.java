@@ -318,7 +318,7 @@ public class Client {
 					quantityToAdd = s.nextInt();
 				}
 				input =  s.nextLine(); // Eat up new line.
-				System.out.println("When is the expiration?: yy/mm/dd");
+				System.out.println("When is the expiration?: yyyy/mm/dd");
 				input =  s.nextLine();
 				String[] ymd = input.split("/");
 				ArrayList<Ingredient> toBeAdded = new ArrayList<Ingredient>();
