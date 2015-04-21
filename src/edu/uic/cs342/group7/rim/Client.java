@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ public class Client {
 	static ArrayList<Dish> dishes = new ArrayList<Dish>();
 	static Api connection = new Api();
 	static HashMap<String, String> dishSizes = new HashMap<String, String>();
+	static GregorianCalendar cal =  new GregorianCalendar();
 
 	/**
 	 * This function will print out the menu for the user to select from.
@@ -40,6 +42,8 @@ public class Client {
 	 */
 	private static void printMenu() {
 		printHeader("Menu");
+		cal.setTime(connection.getDate());
+		System.out.println("Current Date: " + cal.get(GregorianCalendar.YEAR) + "/" + ((cal.get(GregorianCalendar.MONTH))+1) + "/" + cal.get(GregorianCalendar.DAY_OF_MONTH));
 		System.out.println("1. Order Dish");
 		System.out.println("2. Add Items to Inventory");
 		System.out.println("3. Current Inventory");
