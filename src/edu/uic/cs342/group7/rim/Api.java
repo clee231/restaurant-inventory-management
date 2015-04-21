@@ -96,11 +96,9 @@ public class Api {
 		//Go through each ingredient and add a Date using the calendar class as a helper
 		//If client wants
 		if(autoIncludeInventory) { 
-    	for(Ingredient i : shoppingList){
-    		i.getFirstQuantity().setDate(calendar.getTime());			
-    	}
-    	//Add the shopping list to the inventory
-    	inventory.addItems(shoppingList);
+			for(Ingredient i : shoppingList){
+				i.getFirstQuantity().setDate(calendar.getTime());			
+    		}
 		}
 		
 		calendar.setTime(currentDate);
