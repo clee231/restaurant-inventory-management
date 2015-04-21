@@ -49,8 +49,8 @@ public class Client {
 		System.out.println("2. Add Items to Inventory");
 		System.out.println("3. Current Inventory");
 		System.out.println("4. End Day");
-		System.out.println("5. Forecast Shopping List");
-		System.out.println("6. Load data from file");
+		System.out.println("5. Forecast Shopping List (based on previous day's ordered dishes)");
+		System.out.println("6. Load data from file (This will reset the system completely!!!)");
 		System.out.println("q. Quit");
 	}
 	/**
@@ -310,7 +310,7 @@ public class Client {
 						} else if (dSize.substring(0, 1).toUpperCase().equalsIgnoreCase("S")) {
 							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), (item.getQuantity()*2));
 						} else {
-							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), (item.getQuantity()/2));
+							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), ((int)Math.ceil(((double)item.getQuantity())/2)));
 						}
 					}
 				}
@@ -342,7 +342,7 @@ public class Client {
 				Ingredient ingredientStaged = new Ingredient(ingreds.get(ingredientToAdd).getName());
 				Quantity newQuantity = new Quantity();
 				newQuantity.setCount(quantityToAdd);
-				GregorianCalendar itemDate = new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]),Integer.parseInt(ymd[2]));
+				GregorianCalendar itemDate = new GregorianCalendar(Integer.parseInt(ymd[0]),Integer.parseInt(ymd[1]) - 1,Integer.parseInt(ymd[2]));
 				newQuantity.setDate(itemDate.getTime());
 				ingredientStaged.addQuantity(newQuantity);
 				toBeAdded.add(ingredientStaged);

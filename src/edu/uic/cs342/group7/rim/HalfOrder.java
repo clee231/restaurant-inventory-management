@@ -25,7 +25,7 @@ public class HalfOrder implements DishSize {
 		  DishIngredient temp = itr.next();
 		  
 		  ingredient.setIngredient(temp.getIngredient());
-		  ingredient.setQuantity(temp.getQuantity()/2);
+		  ingredient.setQuantity((int)Math.ceil(((double)temp.getQuantity())/2));
 		  newIngredients.add(ingredient);
 		}
 
