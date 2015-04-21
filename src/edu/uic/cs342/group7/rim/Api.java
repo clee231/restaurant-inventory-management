@@ -124,4 +124,12 @@ public class Api {
 		inventory.removedSpoiledIngredients(currentDate);
 		observer.resetList();
 	}
+	
+	/**
+	 * This function will return the current Date that the system is at.
+	 * @return returns a date object indicating the current date.
+	 */
+	public Date getDate() {
+		return currentDate;
+	}
 }
