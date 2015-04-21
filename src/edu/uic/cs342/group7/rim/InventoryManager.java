@@ -209,4 +209,30 @@ public class InventoryManager {
     return consolidatedHistory;
   }
   
+  
+  /**
+   * Returns current counts of available ingredients store in system
+   *  
+   * @return list of ingredient counts
+   */
+  public ArrayList<DishIngredient> getCurrentInventory() {
+    ArrayList<DishIngredient> list = new ArrayList<DishIngredient>();
+    Iterator<Map.Entry<String, Ingredient>> entries = database.entrySet().iterator();
+    Ingredient dataIngredient;
+    Ingredient copy;
+    DishIngredient inventoryListEntry;
+    
+    while(entries.hasNext()) {
+      dataIngredient = entries.next().getValue();
+      inventoryListEntry = new DishIngredient();
+      
+      copy = new Ingredient(dataIngredient.getName());
+      inventoryListEntry.setIngredient(copy);
+      inventoryListEntry.setQuantity(dataIngredient.getTotalQuantityOfIngredient());
+      
+      list.add(inventoryListEntry);
+    }
+    
+    return list;
+  }
 }

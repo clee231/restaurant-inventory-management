@@ -132,4 +132,13 @@ public class Api {
 	public Date getDate() {
 		return currentDate;
 	}
+	
+	
+	/**
+	 * Returns list of total count of ingredients in system
+	 * @return total count list
+	 */
+	public ArrayList<DishIngredient> getCurrentInventory() {
+	  return inventory.getCurrentInventory();  
+	}
 }
