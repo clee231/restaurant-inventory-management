@@ -302,10 +302,16 @@ public class Client {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " ordered successfully.");
 				}else {
 					System.out.println(dishSizes.get(dSize.substring(0, 1).toUpperCase()) + " of " + dishes.get(getDish).getName() + " order failed. System does not have enough ingredients to fulfill the order.");
-					System.out.println("A Full Size Order of '" + dishes.get(getDish).getName() + "' requires the following ingredients: ");
+					System.out.println("A "+ dishSizes.get(dSize.substring(0, 1).toUpperCase()) +" of '" + dishes.get(getDish).getName() + "' requires the following ingredients: ");
 					Dish curDish = dishes.get(getDish);
 					for(DishIngredient item : curDish.getIngredients()) {
-						System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), item.getIngredient().getTotalQuantityOfIngredient());
+						if (dSize.substring(0, 1).toUpperCase().equalsIgnoreCase("F")) {
+							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), item.getQuantity());
+						} else if (dSize.substring(0, 1).toUpperCase().equalsIgnoreCase("S")) {
+							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), (item.getQuantity()*2));
+						} else {
+							System.out.format("Item: %s, Quantity: %d\n", item.getIngredient().getName(), (item.getQuantity()/2));
+						}
 					}
 				}
 				break;
@@ -373,6 +379,7 @@ public class Client {
 				break;
 			case 6:
 				printHeader("Load Data from file");
+				connection = new Api();
 				System.out.println("Would you like to load from default files?: (Y/N)");
 				input = s.nextLine();
 				if (input.equalsIgnoreCase("Y")) {
