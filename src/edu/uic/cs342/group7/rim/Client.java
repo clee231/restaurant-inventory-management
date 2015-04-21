@@ -1,6 +1,6 @@
 /**
  * Restaurant Inventory Management
- * Group 7
+ * Group 7 
  */
 package edu.uic.cs342.group7.rim;
 
