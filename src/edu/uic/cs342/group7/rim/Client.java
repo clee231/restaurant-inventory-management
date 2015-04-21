@@ -1,6 +1,6 @@
 /**
  * Restaurant Inventory Management
- * Group 7 
+ * Group 7
  */
 package edu.uic.cs342.group7.rim;
 
@@ -191,7 +191,7 @@ public class Client {
 				String ingredientName = elements[0];
 				int curQuantity = Integer.parseInt(elements[1]);
 				String[] parseDate = elements[2].split("/");
-				GregorianCalendar date2 = new GregorianCalendar(Integer.parseInt(parseDate[0]),Integer.parseInt(parseDate[1]),Integer.parseInt(parseDate[2]));
+				GregorianCalendar date2 = new GregorianCalendar(Integer.parseInt(parseDate[0]),Integer.parseInt(parseDate[1])-1,Integer.parseInt(parseDate[2]));
 				if (ingredientExists(ingreds,ingredientName)) {
 					Ingredient ingredientToAdd2 = new Ingredient(ingredientName);
 					Quantity newQuantity2 = new Quantity();
