@@ -98,7 +98,8 @@ public class Api {
 		if(autoIncludeInventory) { 
 			for(Ingredient i : shoppingList){
 				i.getFirstQuantity().setDate(calendar.getTime());			
-    		}
+    	}
+			inventory.addItems(shoppingList);
 		}
 		
 		calendar.setTime(currentDate);
