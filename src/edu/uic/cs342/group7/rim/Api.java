@@ -84,7 +84,9 @@ public class Api {
 	
 	//This function will receive an arrayList of Dish from the ordering system to pass it to the inventory manager
 	//Then it will receive an arrayList of Ingredient from the inventory manager and return that to the client
-	public ArrayList<Ingredient> getShoppingList(){
+	//autoIncludeInventory to indicate adds quantities on shopping list to inventory automatically with 
+	//expiration dates 7 days later than current date.
+	public ArrayList<Ingredient> getShoppingList(boolean autoIncludeInventory){
 		calendar.setTime(currentDate);
 		// Foods will expire after 7 days or 1 week
 		calendar.add(Calendar.DATE, 7);
@@ -92,11 +94,16 @@ public class Api {
 		ArrayList<Ingredient> shoppingList = new ArrayList<Ingredient>();
 		shoppingList = inventory.forecast(previousDayDishes);
 		//Go through each ingredient and add a Date using the calendar class as a helper
-		for(Ingredient i : shoppingList){
-			i.getFirstQuantity().setDate(calendar.getTime());			
+		//If client wants
+		if(autoIncludeInventory) { 
+    	for(Ingredient i : shoppingList){
+    		i.getFirstQuantity().setDate(calendar.getTime());			
+    	}
+    	//Add the shopping list to the inventory
+    	inventory.addItems(shoppingList);
 		}
-		//Add the shopping list to the inventory
-		inventory.addItems(shoppingList);
+		
+		calendar.setTime(currentDate);
 		return shoppingList;
 	}
 
